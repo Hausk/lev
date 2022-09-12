@@ -11,8 +11,8 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import useProduct from '../composables/products';
-var Emitter = require('tiny-emitter');
-var emitter = new Emitter();
+import tinyEmitter from 'tiny-emitter';
+var emitter = new tinyEmitter();
 
 
 const { getCount } = useProduct();
