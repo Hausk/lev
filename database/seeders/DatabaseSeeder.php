@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::factory()
-            ->count(10)
+            ->count(25)
             ->has(
                 Order::factory()
                     ->count(3)

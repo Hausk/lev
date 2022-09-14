@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\ImageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,4 +24,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('products/count', [CartController::class, 'count'])
         ->name('products.count');
     Route::apiResource('products', CartController::class);
+    Route::get('images/show', [ImageController::class, 'show']);
+    Route::post('images/upload', [ImageController::class, 'store']);
 });

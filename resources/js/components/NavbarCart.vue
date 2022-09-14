@@ -11,13 +11,12 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import useProduct from '../composables/products';
-import tinyEmitter from 'tiny-emitter';
-var emitter = new tinyEmitter();
+import tinyEmitter from 'tiny-emitter/instance';
 
 
 const { getCount } = useProduct();
 const cartCount = ref(0);
-emitter.on('cartCountUpdated', (count) => cartCount.value = count);
+tinyEmitter.on('cartCountUpdated', (count) => cartCount.value = count);
 
 onMounted(async() => {
     cartCount.value = await getCount();

@@ -4,7 +4,7 @@
     </div>
 </template>
 <script setup>
-    import { TinyEmitter } from 'tiny-emitter';
+    import tinyEmitter from 'tiny-emitter/instance';
     import useProduct from '../composables/products/';
 
     const { add } = useProduct();
@@ -15,7 +15,7 @@
         await axios.get('/api/user')
             .then(async (res) => {
                 let cartCount = await add(productId);
-                TinyEmitter.emit('refreshCartCount', cartCount);
+                tinyEmitter.emit('cartCountUpdated', cartCount);
             })
             .catch(err => console.log(err));
     }
