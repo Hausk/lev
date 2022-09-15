@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ImageController extends Controller
 {
     public function index()
     {
-        return view('images.index');
+        if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Bras-droit')
+            return view('images.index');
+        else
+            return redirect('dashboard')->with('status', 'Unauthorize');
     }
     public function show()
     {

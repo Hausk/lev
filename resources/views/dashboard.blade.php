@@ -1,5 +1,12 @@
 <x-app-layout>
         <main class="p-6 sm:p-10 space-y-6">
+          @if (session('status') == 'Unauthorize')
+              <div class="fixed right-5 bottom-5 max-w-xs bg-red-400 text-sm text-white rounded-md shadow-lg mb-3 ml-3 animation" role="alert">
+                <div class="flex p-4">
+                  Vous n'êtes n'avez pas les droits !
+                </div>
+              </div>
+          @endif
           <div class="flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between">
             <div class="mr-6">
               <h1 class="text-4xl font-semibold mb-2">Tableau de bord</h1>

@@ -33,7 +33,7 @@
                     <span class="text-sm text-gray-300 left w-full truncate">{{ Auth::user()->role }}</span>
                 </div>
             </div>
-            <div class="side-nav__devider mx-auto w-3/4 h-px bg-slate-400/[.4]"></div>
+            <div class="my-3 mx-auto w-3/4 h-px bg-slate-400/[.4]"></div>
             <li>
                 <a href="{{ route('dashboard') }}" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                 <span class="inline-flex justify-center items-center ml-3">
@@ -42,6 +42,7 @@
                 <span class="ml-2 text-sm tracking-wide truncate">Dashboard</span>
                 </a>
             </li>
+            @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Bras-droit')
             <li>
                 <a href="{{ route('images.index') }}" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                 <span class="inline-flex justify-center items-center ml-3">
@@ -60,6 +61,7 @@
                 <span class="ml-2 text-sm tracking-wide truncate">Gestion des utilisateurs</span>
                 </a>
             </li>
+            @endif
             <div class="my-3 mx-auto w-3/4 h-px bg-slate-400/[.4]"></div>
             <li>
                 <a href="#" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">

@@ -98,9 +98,6 @@ setOptions({
             onerror: (response) => {
                 serverMessage = JSON.parse(response);
             },
-            headers: {
-                'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
-            }
         }
     },
     labelFileProcessingError: () => {
@@ -132,7 +129,6 @@ export default {
         filepondInitialized() {
             console.log('Filepond is ready!');
             console.log('Filepond object:', this.$refs.pond);
-            console.log(document.head.querySelector('meta[name="csrf-token"]').content);
         },
         handleProcessedFile(error, file) {
             if (error) {

@@ -24,7 +24,6 @@ Route::get('products', [ProductController::class, 'index'])
 
 Route::get('dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
-if (auth())
 Route::get('/images', [ImageController::class, 'index'])->middleware(['auth'])->name('images.index');
-
 require __DIR__.'/auth.php';
+
