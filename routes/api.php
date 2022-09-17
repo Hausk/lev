@@ -20,10 +20,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
-    
-Route::get('products/count', [CartController::class, 'count'])
-    ->name('products.count');
-Route::apiResource('products', CartController::class);
-Route::get('images/show', [ImageController::class, 'show']);
-Route::post('images/upload', [ImageController::class, 'store']);
+Route::get('/images/show', [ImageController::class, 'show']);
+Route::post('/images/upload', [ImageController::class, 'store']);
+Route::post('/images/remove', [ImageController::class, 'delete']);
 });

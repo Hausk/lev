@@ -12,14 +12,5 @@ export default defineConfig({
             ],
             refresh: true,
         }),
-    ],
-    build: {
-
-        /** If you set esmExternals to true, this plugins assumes that 
-          all external dependencies are ES modules */
-     
-        commonjsOptions: {
-           esmExternals: true 
-        },
-     }
+    ]
 });

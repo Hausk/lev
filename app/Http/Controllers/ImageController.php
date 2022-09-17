@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
@@ -17,7 +19,11 @@ class ImageController extends Controller
     }
     public function show()
     {
+        Log::log('====================================================================================');
+        Log::debug('====================================================================================');
+        Log::single('Chut');
         return Image::latest()->pluck('name')->toArray();
+        
     }
     public function store(Request $request)
     {
@@ -31,7 +37,7 @@ class ImageController extends Controller
         ]);
 
         // save the file in storage
-        $path = $request->file('image')->store('/images');
+        $path = $request->file('image')->store('images');
 
         if (!$path) {
             return response()->json(['error' => 'The file could not be saved.'], 500);
@@ -48,5 +54,19 @@ class ImageController extends Controller
 
         // return that image model back to the frontend
         return $image->name;
+    }
+    public function delete(Request $request)
+    {
+        // save the file in storage
+        $path = $request->file('image')->store('images');
+
+        if (!$path) {
+            return response()->json(['error' => 'The file could not be remove.'], 500);
+        }
+        Log::info('====================================================================================');
+        Log::info($path);
+        $image = Storage::delete($path);
+
+        return $image;
     }
 }
