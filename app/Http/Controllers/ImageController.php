@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,18 +13,16 @@ class ImageController extends Controller
 {
     public function index()
     {
-        if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Bras-droit')
-            return view('images.index');
+        if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Bras-droit') {
+            $images = DB::table('images')->latest()->get();
+            return view('images.index', ['gallerie' => $images]);
+        }
         else
             return redirect('dashboard')->with('status', 'Unauthorize');
     }
     public function show()
     {
-        Log::log('====================================================================================');
-        Log::debug('====================================================================================');
-        Log::single('Chut');
         return Image::latest()->pluck('name')->toArray();
-        
     }
     public function store(Request $request)
     {
@@ -63,8 +62,6 @@ class ImageController extends Controller
         if (!$path) {
             return response()->json(['error' => 'The file could not be remove.'], 500);
         }
-        Log::info('====================================================================================');
-        Log::info($path);
         $image = Storage::delete($path);
 
         return $image;

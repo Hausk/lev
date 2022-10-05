@@ -5,6 +5,7 @@ import NavbarCart from './components/NavbarCart.vue';
 import ChartLine from './components/ChartLine.vue';
 import SideBar from './components/SideBar.vue';
 import ImageUploader from './components/ImageUploader.vue';
+import TableLine from './components/TableLine.vue';
 
 import Alpine from 'alpinejs';
 
@@ -19,5 +20,6 @@ app.component('NavbarCart', NavbarCart);
 app.component('ChartLine', ChartLine);
 app.component('SideBar', SideBar);
 app.component('ImageUploader', ImageUploader);
+app.component('TableLine', TableLine);
 
 app.mount('#app');
