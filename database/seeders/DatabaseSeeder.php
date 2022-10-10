@@ -19,14 +19,6 @@ class DatabaseSeeder extends Seeder
     {
         User::factory()
             ->count(25)
-            ->has(
-                Order::factory()
-                    ->count(3)
-                    ->hasAttached(
-                        Product::factory()->count(5),
-                        ['total_price' => rand(100, 500), 'total_quantity' => rand(1, 3)]
-                    )
-            )
             ->create();
     }
 }

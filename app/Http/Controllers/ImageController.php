@@ -1,72 +1,62 @@
 <?php
-
+    
 namespace App\Http\Controllers;
 
-use App\Models\Image;
+use App\Models\ImageModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-
+use Image;
+    
 class ImageController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Bras-droit')
-            return view('images.index');
-        else
-            return redirect('dashboard')->with('status', 'Unauthorize');
+        $images = ImageModel::all();
+        return view('images.index', ['images' => $images]);
     }
-    public function show()
-    {
-        Log::log('====================================================================================');
-        Log::debug('====================================================================================');
-        Log::single('Chut');
-        return Image::latest()->pluck('name')->toArray();
         
-    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
-    {
-        // validate the incoming file
-        if (!$request->hasFile('image')) {
-            return response()->json(['error' => 'There is no image present.'], 400);
+    { 
+        if($request->hasFile('image')) {
+            $image = Image::make($request->file('image'));
+            /**
+             * Main Image Upload on Folder Code
+             */
+            $imageName = time().'-'.$request->file('image')->getClientOriginalName();
+            $destinationPath = public_path('images/standard/');
+            $image->save($destinationPath.$imageName);
+            /**
+             * Generate Thumbnail Image Upload on Folder Code
+             */
+            $destinationPathThumbnail = public_path('images/thumbnail/');
+            $image->save($destinationPathThumbnail.$imageName, 50);
+
+            $imagemodel= new ImageModel();
+            $imagemodel->name=time().'-'.$request->file('image')->getClientOriginalName();
+            $imagemodel->category='Animaux';
+            $imagemodel->save();
+
+            /**
+             * Write Code for Image Upload Here,
+             *
+             * $upload = new Images();
+             * $upload->file = $imageName;
+             * $upload->save();            
+            */
+            return back()
+                ->with('success','Image Upload successful')
+                ->with('imageName',$imageName);
         }
-
-        $request->validate([
-            'image' => 'required|file|image|mimes:jpg,jpeg,png'
-        ]);
-
-        // save the file in storage
-        $path = $request->file('image')->store('images');
-
-        if (!$path) {
-            return response()->json(['error' => 'The file could not be saved.'], 500);
-        }
-
-        $uploadedFile = $request->file('image');
-
-        // create image model
-        $image = Image::create([
-            'name' => $uploadedFile->hashName(),
-            'extension' => $uploadedFile->extension(),
-            'size' => $uploadedFile->getSize()
-        ]);
-
-        // return that image model back to the frontend
-        return $image->name;
-    }
-    public function delete(Request $request)
-    {
-        // save the file in storage
-        $path = $request->file('image')->store('images');
-
-        if (!$path) {
-            return response()->json(['error' => 'The file could not be remove.'], 500);
-        }
-        Log::info('====================================================================================');
-        Log::info($path);
-        $image = Storage::delete($path);
-
-        return $image;
+       
+        return back();
     }
 }

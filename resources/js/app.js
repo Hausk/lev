@@ -6,6 +6,7 @@ import ChartLine from './components/ChartLine.vue';
 import SideBar from './components/SideBar.vue';
 import ImageUploader from './components/ImageUploader.vue';
 
+import 'flowbite/dist/flowbite.js';
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
