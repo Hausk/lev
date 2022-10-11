@@ -31,6 +31,7 @@ Route::get('/images', [ImageController::class, 'index'])->middleware(['auth'])->
 Route::controller(ImageController::class)->group(function(){
     Route::get('image-upload', 'index');
     Route::post('image-upload', 'store')->name('image.store');
+    Route::post('image-upload/{id}', 'destroy')->name('image.destroy');
 });
 
 require __DIR__.'/auth.php';

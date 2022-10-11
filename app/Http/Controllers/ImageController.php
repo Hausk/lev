@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\ImageModel;
 use Illuminate\Http\Request;
+use Illuminate\Log\Logger;
+use Illuminate\Support\Facades\Log;
 use Image;
     
 class ImageController extends Controller
@@ -15,6 +17,7 @@ class ImageController extends Controller
      */
     public function index()
     {
+        Log::info('Showing the user profile for user: ');
         $images = ImageModel::all();
         return view('images.index', ['images' => $images]);
     }
@@ -58,5 +61,16 @@ class ImageController extends Controller
         }
        
         return back();
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        Log::info('TTTTT: ' + $id);
+        return back()
+                ->with('success','Image Upload successful');
     }
 }
