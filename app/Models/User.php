@@ -45,8 +45,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function orders(): HasMany
+    public function posts()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Post::class);
+    }
+    public function categories()
+    {
+        return $this->hasMany(Categories::class);
     }
 }

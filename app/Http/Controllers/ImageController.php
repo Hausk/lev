@@ -64,13 +64,15 @@ class ImageController extends Controller
     }
     /**
      * Display a listing of the resource.
-     *
+     * @param \App\Models\ImageModel
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ImageModel $imageModel)
     {
-        Log::info('TTTTT: ' + $id);
-        return back()
-                ->with('success','Image Upload successful');
+        $this->authorize('delete', $imageModel);
+ 
+        $imageModel->delete();
+ 
+        return redirect(route('image.index'));
     }
 }
