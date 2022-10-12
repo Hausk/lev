@@ -39,7 +39,7 @@ Route::resource('categories', CategoriesController::class)
     ->middleware(['auth']);
 
 Route::resource('posts', PostController::class)
-    ->only(['index', 'store'])
+    ->only(['index', 'store', 'edit', 'update', 'destroy'])
     ->middleware(['auth']);
 
 require __DIR__.'/auth.php';

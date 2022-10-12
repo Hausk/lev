@@ -43,7 +43,8 @@ class CategoriesController extends Controller
  
         $request->user()->categories()->create($validated);
  
-        return redirect(route('categories.index'));
+        return back()
+            ->with('success','Catégorie créer avec succès');
     }
 
     /**

@@ -44,27 +44,26 @@ class PostController extends Controller
     public function store(Request $request)
     {
         if($request->hasFile('image')) {
-            Log::info('-------==========----------');
-            Log::info($request);
-            Log::info('-------==========----------');
-            $image = Image::make($request->file('image'));
-            /**
-             * Main Image Upload on Folder Code
-             */
-            $imageName = time().'-'.$request->file('image')->getClientOriginalName();
-            $destinationPath = public_path('images/standard/');
-            $image->save($destinationPath.$imageName);
-            /**
-             * Generate Thumbnail Image Upload on Folder Code
-             */
-            $destinationPathThumbnail = public_path('images/thumbnail/');
-            $image->save($destinationPathThumbnail.$imageName, 50);
+            foreach ($request->image as $imageFile) {
+                $image = Image::make($imageFile);
+                /**
+                 * Main Image Upload on Folder Code
+                 */
+                $imageName = str_replace(' ','-',$imageFile->getClientOriginalName());
+                $destinationPath = public_path('images/standard/');
+                $image->save($destinationPath.$imageName);
+                /**
+                 * Generate Thumbnail Image Upload on Folder Code
+                 */
+                $destinationPathThumbnail = public_path('images/thumbnail/');
+                $image->save($destinationPathThumbnail.$imageName, 50);
 
-            $postModel = new Post();
-            $postModel->message = time().'-'.$request->file('image')->getClientOriginalName();
-            $postModel->categories_id = $request->categories_id;
-            $postModel->user_id = auth()->id();
-            $postModel->save();
+                $postModel = new Post();
+                $postModel->message = str_replace(' ','-',$imageFile->getClientOriginalName());
+                $postModel->categories_id = $request->categories_id;
+                $postModel->user_id = auth()->id();
+                $postModel->save();
+            }
             return redirect(route('posts.index'));
         }
         //$request->user()->posts()->create($validated);
@@ -114,6 +113,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $this->authorize('delete', $post);
+ 
+        $post->delete();
+        unlink("images/standard/$post->message");
+        unlink("images/thumbnail/$post->message");
+        return redirect(route('posts.index'));
     }
 }
