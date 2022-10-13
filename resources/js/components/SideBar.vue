@@ -84,11 +84,3 @@
     </div>
   </div>
 </template>
-<script setup>
-  const dashboardLink = () => {
-    axios.get('/dashboard');
-  }
-  const listLink = () => {
-    axios.get('/images');
-  }
-</script>

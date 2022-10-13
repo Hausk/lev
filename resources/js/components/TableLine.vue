@@ -33,5 +33,3 @@
     </tr>
     </div>
 </template>
-<script setup>
-</script>
